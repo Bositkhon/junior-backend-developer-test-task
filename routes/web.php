@@ -21,4 +21,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('test', 'TestController@index');
+Route::resource('events', 'EventController')
+    ->except('show');
+Route::resource('companies', 'CompanyController')
+    ->except('show');

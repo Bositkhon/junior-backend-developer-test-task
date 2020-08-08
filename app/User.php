@@ -16,8 +16,6 @@ class User extends Authenticatable
     const UPDATED_AT = 'updated_at';
     const DELETED_AT = 'deleted_at';
 
-    protected $dateFormat = 'd.m.Y H:i:s';
-
     /**
      * The attributes that are mass assignable.
      *
@@ -42,7 +40,33 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'email_verified_at' => 'datetime:m.d.Y H:i:s',
+        self::CREATED_AT => 'datetime:m.d.Y H:i:s',
+        self::UPDATED_AT => 'datetime:m.d.Y H:i:s',
+        self::DELETED_AT => 'datetime:m.d.Y H:i:s'
     ];
 
+    /**
+     * Mutators
+     */
+
+    public function getFullNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
+
+    /**
+     * Relations
+     */
+
+    public function companies()
+    {
+        return $this->hasMany(Company::class, 'user_id', 'id');
+    }
+
+    public function events()
+    {
+        return $this->hasManyThrough(Event::class, Company::class, 'user_id', 'company_id', 'id', 'id');
+    }
+    
 }
