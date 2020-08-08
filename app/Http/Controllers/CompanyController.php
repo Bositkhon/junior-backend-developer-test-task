@@ -50,7 +50,7 @@ class CompanyController extends Controller
 
         return redirect()
             ->route('companies.index')
-            ->with('success', __('store.success', ['model' => 'Category']));
+            ->with('success', __('messages.store_success', ['model' => 'Category']));
     }
 
     /**
@@ -92,7 +92,7 @@ class CompanyController extends Controller
 
         return redirect()
             ->route('companies.index')
-            ->with('success', __('update.success', ['model' => 'Company']));
+            ->with('success', __('messages.update_success', ['model' => 'Company']));
     }
 
     /**
@@ -108,6 +108,6 @@ class CompanyController extends Controller
 
         return redirect()
             ->back()
-            ->with('success', __('destroy.success', ['model' => 'Company']));
+            ->with('success', __('messages.destroy_success', ['model' => 'Company']));
     }
 }

@@ -56,7 +56,7 @@ class EventController extends Controller
 
         return redirect()
             ->route('events.index')
-            ->with('success', __('store.success', ['model' => 'Event']));
+            ->with('success', __('messages.store_success', ['model' => 'Event']));
     }
 
     /**
@@ -89,7 +89,7 @@ class EventController extends Controller
 
         return redirect()
             ->back()
-            ->with('success', __('update.success', ['model' => 'Event']));
+            ->with('success', __('messages.update_success', ['model' => 'Event']));
 
     }
 
@@ -101,6 +101,10 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
-        //
+        $event->delete();
+
+        return redirect()
+            ->route('events.index')
+            ->with('success', __('messages.destroy_success', ['model' => 'Event']));
     }
 }

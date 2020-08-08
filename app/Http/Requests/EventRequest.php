@@ -50,8 +50,13 @@ class EventRequest extends FormRequest
                 'required',
                 'date',
                 function ($attribute, $value, $fail) {
+                    $eventRouteParam = $this->route('event');
                     $date = Carbon::parse($value);
-                    $eventsCount = Event::whereDate('date', $date)->count();
+                    $eventsCount = Event::whereDate('date', $date)
+                        ->when($eventRouteParam != null, function ($query) use ($eventRouteParam) {
+                            return $query->where('id', '!=', $eventRouteParam->id);
+                        })
+                        ->count();
                     if ($eventsCount >= 3) {
                         $fail('On the same date you may have no more than three events');
                     }
